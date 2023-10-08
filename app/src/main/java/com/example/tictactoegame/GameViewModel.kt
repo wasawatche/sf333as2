@@ -6,9 +6,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import kotlin.random.Random
 
+
 class GameViewModel: ViewModel() {
     var state by mutableStateOf(GameState())
     var randNum = 0
+
 
     val boardItems: MutableMap<Int, BoardCellValue> = mutableMapOf(
         1 to BoardCellValue.NONE,
@@ -335,20 +337,44 @@ class GameViewModel: ViewModel() {
             boardItems[i] = BoardCellValue.NONE
         }
         if (hasBoardFull()) {
-            state = state.copy(
-                hintText = "Player 'O' turn",
-                currentTurn = BoardCellValue.CIRCLE,
-                victoryType = VictoryType.NONE,
-                hasWon = false
-            )
+            if (state.count % 2 != 0) {
+                state = state.copy(
+                    hintText = "Player 'O' turn",
+                    currentTurn = BoardCellValue.CIRCLE,
+                    victoryType = VictoryType.NONE,
+                    hasWon = false,
+                    count = state.count + 1
+                )
+            } else {
+                state = state.copy(
+                    hintText = "Player 'X' turn",
+                    currentTurn = BoardCellValue.CROSS,
+                    victoryType = VictoryType.NONE,
+                    hasWon = false,
+                    count = state.count + 1
+                )
+                computerMove()
+            }
         } else {
-            state = state.copy(
-                hintText = "Player 'O' turn",
-                currentTurn = BoardCellValue.CIRCLE,
-                drawCount = state.drawCount + 1,
-                victoryType = VictoryType.NONE,
-                hasWon = false
-            )
+            if (state.count % 2 != 0) {
+                state = state.copy(
+                    hintText = "Player 'O' turn",
+                    currentTurn = BoardCellValue.CIRCLE,
+                    drawCount = state.drawCount + 1,
+                    victoryType = VictoryType.NONE,
+                    hasWon = false,
+                    count = state.count + 1
+                )
+            } else {
+                state = state.copy(
+                    hintText = "Player 'X' turn",
+                    currentTurn = BoardCellValue.CROSS,
+                    victoryType = VictoryType.NONE,
+                    hasWon = false,
+                    count = state.count + 1
+                )
+                computerMove()
+            }
         }
     }
 
