@@ -8,7 +8,7 @@ import kotlin.random.Random
 
 class GameViewModel: ViewModel() {
     var state by mutableStateOf(GameState())
-    var randNum = 1
+    var randNum = 0
 
     val boardItems: MutableMap<Int, BoardCellValue> = mutableMapOf(
         1 to BoardCellValue.NONE,
@@ -86,6 +86,7 @@ class GameViewModel: ViewModel() {
             } else if (middleFree()) {
                 addValueToBoard(5)
             } else {
+                randNum = Random.nextInt(1, 10)
                 while (boardItems[randNum] != BoardCellValue.NONE) {
                     randNum = Random.nextInt(1, 10)
                 }
@@ -246,7 +247,7 @@ class GameViewModel: ViewModel() {
                     boardItems[9] == BoardCellValue.NONE -> {
                 return 9
             }
-            boardItems[7] == BoardCellValue.CIRCLE && boardItems[8] == BoardCellValue.NONE &&
+            boardItems[7] == BoardCellValue.CROSS && boardItems[8] == BoardCellValue.NONE &&
                     boardItems[9] == BoardCellValue.CROSS -> {
                 return 8
             }
