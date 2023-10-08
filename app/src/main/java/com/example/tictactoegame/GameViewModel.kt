@@ -4,9 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import kotlin.random.Random
 
 class GameViewModel: ViewModel() {
     var state by mutableStateOf(GameState())
+    var randNum = 0
 
     val boardItems: MutableMap<Int, BoardCellValue> = mutableMapOf(
         1 to BoardCellValue.NONE,
@@ -76,14 +78,17 @@ class GameViewModel: ViewModel() {
     }
 
     private fun computerMove() {
-        if (canWin()) {
-
+        if (canWin() != 0) {
+            addValueToBoard(canWin())
         } else if (canBLock() != 0) {
-
+            addValueToBoard(canBLock())
         } else if (middleFree()) {
-
+            addValueToBoard(5)
         } else {
-
+            randNum = Random.nextInt(1, 10)
+            if (boardItems[randNum] == BoardCellValue.NONE) {
+                addValueToBoard(randNum)
+            }
         }
     }
 
@@ -125,17 +130,14 @@ class GameViewModel: ViewModel() {
             // HORIZONTAL3
             boardItems[7] == BoardCellValue.CIRCLE && boardItems[8] == BoardCellValue.CIRCLE &&
                     boardItems[9] == BoardCellValue.NONE -> {
-                state = state.copy(victoryType = VictoryType.HORIZONTAL3)
                 return 9
             }
             boardItems[7] == BoardCellValue.CIRCLE && boardItems[8] == BoardCellValue.NONE &&
                     boardItems[9] == BoardCellValue.CIRCLE -> {
-                state = state.copy(victoryType = VictoryType.HORIZONTAL3)
                 return 8
             }
             boardItems[7] == BoardCellValue.NONE && boardItems[8] == BoardCellValue.CIRCLE &&
                     boardItems[9] == BoardCellValue.CIRCLE -> {
-                state = state.copy(victoryType = VictoryType.HORIZONTAL3)
                 return 7
             }
             // VERTICAL1
@@ -209,43 +211,114 @@ class GameViewModel: ViewModel() {
         }
     }
 
-    private fun canWin(): Boolean {
+    private fun canWin(): Int {
         when {
-            boardItems[1] == BoardCellValue.NONE && boardItems[2] == BoardCellValue.NONE &&
+            // HORIZONTAL1
+            boardItems[1] == BoardCellValue.CROSS && boardItems[2] == BoardCellValue.CROSS &&
                     boardItems[3] == BoardCellValue.NONE -> {
-                return true
+                return 3
             }
-            boardItems[4] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.NONE &&
+            boardItems[1] == BoardCellValue.CROSS && boardItems[2] == BoardCellValue.NONE &&
+                    boardItems[3] == BoardCellValue.CROSS -> {
+                return 2
+            }
+            boardItems[1] == BoardCellValue.NONE && boardItems[2] == BoardCellValue.CROSS &&
+                    boardItems[3] == BoardCellValue.CROSS -> {
+                return 1
+            }
+            // HORIZONTAL2
+            boardItems[4] == BoardCellValue.CROSS && boardItems[5] == BoardCellValue.CROSS &&
                     boardItems[6] == BoardCellValue.NONE -> {
-                return true
+                return 6
             }
-            boardItems[7] == BoardCellValue.NONE && boardItems[8] == BoardCellValue.NONE &&
+            boardItems[4] == BoardCellValue.CROSS && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[6] == BoardCellValue.CROSS -> {
+                return 5
+            }
+            boardItems[4] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.CROSS &&
+                    boardItems[6] == BoardCellValue.CROSS -> {
+                return 4
+            }
+            // HORIZONTAL3
+            boardItems[7] == BoardCellValue.CROSS && boardItems[8] == BoardCellValue.CROSS &&
                     boardItems[9] == BoardCellValue.NONE -> {
-                state = state.copy(victoryType = VictoryType.HORIZONTAL3)
-                return true
+                return 9
             }
-            boardItems[1] == BoardCellValue.NONE && boardItems[4] == BoardCellValue.NONE &&
+            boardItems[7] == BoardCellValue.CIRCLE && boardItems[8] == BoardCellValue.NONE &&
+                    boardItems[9] == BoardCellValue.CROSS -> {
+                return 8
+            }
+            boardItems[7] == BoardCellValue.NONE && boardItems[8] == BoardCellValue.CROSS &&
+                    boardItems[9] == BoardCellValue.CROSS -> {
+                return 7
+            }
+            // VERTICAL1
+            boardItems[1] == BoardCellValue.CROSS && boardItems[4] == BoardCellValue.CROSS &&
                     boardItems[7] == BoardCellValue.NONE -> {
-                return true
+                return 7
             }
-            boardItems[2] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.NONE &&
+            boardItems[1] == BoardCellValue.CROSS && boardItems[4] == BoardCellValue.NONE &&
+                    boardItems[7] == BoardCellValue.CROSS -> {
+                return 4
+            }
+            boardItems[1] == BoardCellValue.NONE && boardItems[4] == BoardCellValue.CROSS &&
+                    boardItems[7] == BoardCellValue.CROSS -> {
+                return 1
+            }
+            // VERTICAL2
+            boardItems[2] == BoardCellValue.CROSS && boardItems[5] == BoardCellValue.CROSS &&
                     boardItems[8] == BoardCellValue.NONE -> {
-                return true
+                return 8
             }
-            boardItems[3] == BoardCellValue.NONE && boardItems[6] == BoardCellValue.NONE &&
+            boardItems[2] == BoardCellValue.CROSS && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[8] == BoardCellValue.CROSS -> {
+                return 5
+            }
+            boardItems[2] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.CROSS &&
+                    boardItems[8] == BoardCellValue.CROSS -> {
+                return 2
+            }
+            // VERTICAL3
+            boardItems[3] == BoardCellValue.CROSS && boardItems[6] == BoardCellValue.CROSS &&
                     boardItems[9] == BoardCellValue.NONE -> {
-                return true
+                return 9
             }
-            boardItems[1] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.NONE &&
+            boardItems[3] == BoardCellValue.CROSS && boardItems[6] == BoardCellValue.NONE &&
+                    boardItems[9] == BoardCellValue.CROSS -> {
+                return 6
+            }
+            boardItems[3] == BoardCellValue.NONE && boardItems[6] == BoardCellValue.CROSS &&
+                    boardItems[9] == BoardCellValue.CROSS -> {
+                return 3
+            }
+            // DIAGONAL1
+            boardItems[1] == BoardCellValue.CROSS && boardItems[5] == BoardCellValue.CROSS &&
                     boardItems[9] == BoardCellValue.NONE -> {
-                return true
+                return 9
             }
-            boardItems[3] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.NONE &&
+            boardItems[1] == BoardCellValue.CROSS && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[9] == BoardCellValue.CROSS -> {
+                return 5
+            }
+            boardItems[1] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.CROSS &&
+                    boardItems[9] == BoardCellValue.CROSS -> {
+                return 1
+            }
+            // DIAGONAL2
+            boardItems[3] == BoardCellValue.CROSS && boardItems[5] == BoardCellValue.CROSS &&
                     boardItems[7] == BoardCellValue.NONE -> {
-                return true
+                return 7
+            }
+            boardItems[3] == BoardCellValue.CROSS && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[7] == BoardCellValue.CROSS -> {
+                return 5
+            }
+            boardItems[3] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.CROSS &&
+                    boardItems[7] == BoardCellValue.CROSS -> {
+                return 3
             }
             else -> {
-                return false
+                return 0
             }
         }
     }
