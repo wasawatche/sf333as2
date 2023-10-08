@@ -154,9 +154,9 @@ fun GameScreen(viewModel: GameViewModel) {
                 elevation = ButtonDefaults.buttonElevation(5.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Black,
-                    contentColor = Color(0xFFd8d8d8),
+                    contentColor = Color.White,
                     disabledContainerColor = Color(0xFFfff89a),
-                    disabledContentColor = Color(0xFFd8d8d8),
+                    disabledContentColor = Color(0xFFe0e0e0),
                 ),
                 enabled = viewModel.hasBoardFull() || state.hasWon
             ) {
