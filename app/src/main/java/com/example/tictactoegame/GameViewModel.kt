@@ -78,26 +78,176 @@ class GameViewModel: ViewModel() {
     private fun computerMove() {
         if (canWin()) {
 
-        } else if (canBLock()) {
+        } else if (canBLock() != 0) {
 
         } else if (middleFree()) {
 
         } else {
-            /* random moves go! */
+
         }
     }
 
     private fun middleFree(): Boolean {
+        if (boardItems[5] == BoardCellValue.NONE) {
+            return true
+        }
         return false
     }
 
-    private fun canBLock(): Boolean {
-
-        return false
+    private fun canBLock(): Int {
+        when {
+            // HORIZONTAL1
+            boardItems[1] == BoardCellValue.CIRCLE && boardItems[2] == BoardCellValue.CIRCLE &&
+                    boardItems[3] == BoardCellValue.NONE -> {
+                return 3
+            }
+            boardItems[1] == BoardCellValue.CIRCLE && boardItems[2] == BoardCellValue.NONE &&
+                    boardItems[3] == BoardCellValue.CIRCLE -> {
+                return 2
+            }
+            boardItems[1] == BoardCellValue.NONE && boardItems[2] == BoardCellValue.CIRCLE &&
+                    boardItems[3] == BoardCellValue.CIRCLE -> {
+                return 1
+            }
+            // HORIZONTAL2
+            boardItems[4] == BoardCellValue.CIRCLE && boardItems[5] == BoardCellValue.CIRCLE &&
+                    boardItems[6] == BoardCellValue.NONE -> {
+                return 6
+            }
+            boardItems[4] == BoardCellValue.CIRCLE && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[6] == BoardCellValue.CIRCLE -> {
+                return 5
+            }
+            boardItems[4] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.CIRCLE &&
+                    boardItems[6] == BoardCellValue.CIRCLE -> {
+                return 4
+            }
+            // HORIZONTAL3
+            boardItems[7] == BoardCellValue.CIRCLE && boardItems[8] == BoardCellValue.CIRCLE &&
+                    boardItems[9] == BoardCellValue.NONE -> {
+                state = state.copy(victoryType = VictoryType.HORIZONTAL3)
+                return 9
+            }
+            boardItems[7] == BoardCellValue.CIRCLE && boardItems[8] == BoardCellValue.NONE &&
+                    boardItems[9] == BoardCellValue.CIRCLE -> {
+                state = state.copy(victoryType = VictoryType.HORIZONTAL3)
+                return 8
+            }
+            boardItems[7] == BoardCellValue.NONE && boardItems[8] == BoardCellValue.CIRCLE &&
+                    boardItems[9] == BoardCellValue.CIRCLE -> {
+                state = state.copy(victoryType = VictoryType.HORIZONTAL3)
+                return 7
+            }
+            // VERTICAL1
+            boardItems[1] == BoardCellValue.CIRCLE && boardItems[4] == BoardCellValue.CIRCLE &&
+                    boardItems[7] == BoardCellValue.NONE -> {
+                return 7
+            }
+            boardItems[1] == BoardCellValue.CIRCLE && boardItems[4] == BoardCellValue.NONE &&
+                    boardItems[7] == BoardCellValue.CIRCLE -> {
+                return 4
+            }
+            boardItems[1] == BoardCellValue.NONE && boardItems[4] == BoardCellValue.CIRCLE &&
+                    boardItems[7] == BoardCellValue.CIRCLE -> {
+                return 1
+            }
+            // VERTICAL2
+            boardItems[2] == BoardCellValue.CIRCLE && boardItems[5] == BoardCellValue.CIRCLE &&
+                    boardItems[8] == BoardCellValue.NONE -> {
+                return 8
+            }
+            boardItems[2] == BoardCellValue.CIRCLE && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[8] == BoardCellValue.CIRCLE -> {
+                return 5
+            }
+            boardItems[2] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.CIRCLE &&
+                    boardItems[8] == BoardCellValue.CIRCLE -> {
+                return 2
+            }
+            // VERTICAL3
+            boardItems[3] == BoardCellValue.CIRCLE && boardItems[6] == BoardCellValue.CIRCLE &&
+                    boardItems[9] == BoardCellValue.NONE -> {
+                return 9
+            }
+            boardItems[3] == BoardCellValue.CIRCLE && boardItems[6] == BoardCellValue.NONE &&
+                    boardItems[9] == BoardCellValue.CIRCLE -> {
+                return 6
+            }
+            boardItems[3] == BoardCellValue.NONE && boardItems[6] == BoardCellValue.CIRCLE &&
+                    boardItems[9] == BoardCellValue.CIRCLE -> {
+                return 3
+            }
+            // DIAGONAL1
+            boardItems[1] == BoardCellValue.CIRCLE && boardItems[5] == BoardCellValue.CIRCLE &&
+                    boardItems[9] == BoardCellValue.NONE -> {
+                return 9
+            }
+            boardItems[1] == BoardCellValue.CIRCLE && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[9] == BoardCellValue.CIRCLE -> {
+                return 5
+            }
+            boardItems[1] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.CIRCLE &&
+                    boardItems[9] == BoardCellValue.CIRCLE -> {
+                return 1
+            }
+            // DIAGONAL2
+            boardItems[3] == BoardCellValue.CIRCLE && boardItems[5] == BoardCellValue.CIRCLE &&
+                    boardItems[7] == BoardCellValue.NONE -> {
+                return 7
+            }
+            boardItems[3] == BoardCellValue.CIRCLE && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[7] == BoardCellValue.CIRCLE -> {
+                return 5
+            }
+            boardItems[3] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.CIRCLE &&
+                    boardItems[7] == BoardCellValue.CIRCLE -> {
+                return 3
+            }
+            else -> {
+                return 0
+            }
+        }
     }
 
     private fun canWin(): Boolean {
-        return false
+        when {
+            boardItems[1] == BoardCellValue.NONE && boardItems[2] == BoardCellValue.NONE &&
+                    boardItems[3] == BoardCellValue.NONE -> {
+                return true
+            }
+            boardItems[4] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[6] == BoardCellValue.NONE -> {
+                return true
+            }
+            boardItems[7] == BoardCellValue.NONE && boardItems[8] == BoardCellValue.NONE &&
+                    boardItems[9] == BoardCellValue.NONE -> {
+                state = state.copy(victoryType = VictoryType.HORIZONTAL3)
+                return true
+            }
+            boardItems[1] == BoardCellValue.NONE && boardItems[4] == BoardCellValue.NONE &&
+                    boardItems[7] == BoardCellValue.NONE -> {
+                return true
+            }
+            boardItems[2] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[8] == BoardCellValue.NONE -> {
+                return true
+            }
+            boardItems[3] == BoardCellValue.NONE && boardItems[6] == BoardCellValue.NONE &&
+                    boardItems[9] == BoardCellValue.NONE -> {
+                return true
+            }
+            boardItems[1] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[9] == BoardCellValue.NONE -> {
+                return true
+            }
+            boardItems[3] == BoardCellValue.NONE && boardItems[5] == BoardCellValue.NONE &&
+                    boardItems[7] == BoardCellValue.NONE -> {
+                return true
+            }
+            else -> {
+                return false
+            }
+        }
     }
 
     public fun hasBoardFull(): Boolean {
