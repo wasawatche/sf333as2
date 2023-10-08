@@ -9,7 +9,4 @@
 2. วสวัตติ์ ชีพสมุทร์ 6410742735
 
 * ลิงค์ของคลิป demo การรัน
-  - url: 
- 
-
- 
+  - url: https://drive.google.com/drive/folders/1G7dGung1n8X3TXoFTVICsnEUO8MM322a?usp=drive_link
