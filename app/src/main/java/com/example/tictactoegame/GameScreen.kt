@@ -46,7 +46,7 @@ fun GameScreen(viewModel: GameViewModel) {
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.LightGray)
+            .background(Color.White)
             .padding(horizontal = 30.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
@@ -65,8 +65,8 @@ fun GameScreen(viewModel: GameViewModel) {
             text = "Tic Tac Toe",
             fontSize = 50.sp,
             fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Cursive,
-            color = Color.DarkGray,
+            fontFamily = FontFamily.Monospace,
+            color = Color(0xFF9adcff),
         )
 
         Box(
@@ -78,7 +78,7 @@ fun GameScreen(viewModel: GameViewModel) {
                     shape = RoundedCornerShape(20.dp)
                 )
                 .clip(RoundedCornerShape(20.dp))
-                .background(Color.LightGray),
+                .background(Color(0xFFe0e0e0)),
             contentAlignment = Alignment.Center,
         ) {
             BoardBase()
@@ -153,10 +153,10 @@ fun GameScreen(viewModel: GameViewModel) {
                 shape = RoundedCornerShape(5.dp),
                 elevation = ButtonDefaults.buttonElevation(5.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Blue,
-                    contentColor = Color.LightGray,
-                    disabledContainerColor = Color.Black,
-                    disabledContentColor = Color.DarkGray,
+                    containerColor = Color.Black,
+                    contentColor = Color(0xFFd8d8d8),
+                    disabledContainerColor = Color(0xFFfff89a),
+                    disabledContentColor = Color(0xFFd8d8d8),
                 ),
                 enabled = viewModel.hasBoardFull() || state.hasWon
             ) {

@@ -59,14 +59,14 @@ fun Cross() {
         .padding(5.dp),
         ) {
         drawLine(
-            color = Color.Green,
+            color = Color(0xFF50abe7),
             strokeWidth = 20f,
             cap = StrokeCap.Round,
             start = Offset(0f, 0f),
             end = Offset(size.width, size.height)
         )
         drawLine(
-            color = Color.Green,
+            color = Color(0xFF50abe7),
             strokeWidth = 20f,
             cap = StrokeCap.Round,
             start = Offset(0f, size.height),
@@ -83,7 +83,7 @@ fun Circle() {
             .padding(5.dp),
         ) {
         drawCircle(
-            color = Color.Cyan,
+            color = Color(0xFFfb6f92),
             style = Stroke(width = 20f)
         )
     }
